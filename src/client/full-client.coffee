@@ -1,28 +1,71 @@
+# returns the start and end points of selection in input or textarea
+# is complicated due edge cases with \r\n etc
+$.fn.getSelectRange = () ->
+  el = this.get(0)
+  start = 0
+  end = 0
+
+  if (typeof el.selectionStart == "number" && typeof el.selectionEnd == "number")
+    start = el.selectionStart
+    end = el.selectionEnd
+  else
+    range = document.selection.createRange()
+
+    if (range && range.parentElement() == el)
+      len = el.value.length
+      normalizedValue = el.value.replace(/\r\n/g, "\n")
+
+      # Create a working TextRange that lives only in the input
+      textInputRange = el.createTextRange()
+      textInputRange.moveToBookmark(range.getBookmark())
+
+      #Check if the start and end of the selection are at the very end
+      #of the input, since moveStart/moveEnd doesn't return what we want
+      #in those cases
+      endRange = el.createTextRange()
+      endRange.collapse(false)
+
+      if (textInputRange.compareEndPoints("StartToEnd", endRange) > -1)
+        start = end = len
+      else
+        start = -textInputRange.moveStart("character", -len)
+        start += normalizedValue.slice(0, start).split("\n").length - 1
+
+        if (textInputRange.compareEndPoints("EndToEnd", endRange) > -1)
+          end = len
+        else
+          end = -textInputRange.moveEnd("character", -len)
+          end += normalizedValue.slice(0, end).split("\n").length - 1
+  return {
+    start: start,
+    end: end
+  }
+
+# Function to change the selection in a html textarea or input box
+$.fn.setSelectRange = (start, end) ->
+  return this.each () ->
+    if this.setSelectionRange
+      this.focus()
+      this.setSelectionRange(start, end)
+    else if this.createTextRange
+      range = this.createTextRange()
+      range.collapse true
+      range.moveEnd 'character', end
+      range.moveStart 'character', start
+      range.select()
+
 window.runclient = (doTests) ->
-  $('#testDiv').html('jquery changed this div')
-  el = $("#tarea")
-  el.val("turkey")
-  console.log el.text()
+  #DragDrop.bind(document.getElementById("dragMe"))
+  $("#dragMe").draggable(
+    start: (event, ui) ->
+      console.log "drag started"
+    stop: (event, ui) ->
+      console.log "drag stopped"
+    #helper: () ->
+      #$("<div>bbooo</div>")
+  )
+  $("#droppable").droppable(
+    drop: (event, ui) ->
+      console.log("dropped")
+  )
 
-  now = new Date()
-  dateStr = $.format.date(now, "Date Test: dd/MM/yyyy")
-  $("#testDiv").html(dateStr)
-
-  if (doTests)
-    callback = ->
-      Syn.click({}, 'tarea').type("One bar ").click({}, $('#testDiv'), () ->
-        test "Syn Typeing", () ->
-          equal $('#tarea').val(), "One bar turkey", "textarea problem"
-      )
-    setTimeout callback, 1000
-
-    test "QUnit Test", () ->
-      equal true, true, 'QUnit Test'
-
-    test "Basic page checks", () ->
-      expect 2
-      equal $('#tarea').val(), "turkey", "textarea problem"
-      equal true, true, "passing test"
-
-    test "formatDate", () ->
-      equal $.format.date("2009-12-18 10:54:50.546", "Test: dd/MM/yyyy"), "Test: 18/12/2009"

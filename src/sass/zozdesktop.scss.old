@@ -1,0 +1,6 @@
+.dragging {
+  /*-webkit-transform: rotate(7.5deg);*/
+}
+.magic {
+  background-color: yellow;
+}

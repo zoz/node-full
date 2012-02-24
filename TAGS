@@ -1,0 +1,36 @@
+!_TAG_FILE_FORMAT	2	/extended format/
+!_TAG_FILE_SORTED	0	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Łukasz Korecki /lukasz@coffeesounds.com/
+!_TAG_PROGRAM_NAME	CoffeeTags	//
+!_TAG_PROGRAM_URL	https://github.com/lukaszkorecki/CoffeeTags	/GitHub repository/
+!_TAG_PROGRAM_VERSION	0.0.1.8	//
+runtest	./src/client/full-client.coffee	/runtest/;"	f	lineno:1	object:window	type:function
+dd	./src/client/full-client.coffee	/dd/;"	f	lineno:3	object:runtest	type:function
+runclient	./src/client/full-client.coffee	/runclient/;"	f	lineno:7	object:window	type:function
+start	./src/client/full-client.coffee	/start/;"	f	lineno:19	object:runclient	type:function
+stop	./src/client/full-client.coffee	/stop/;"	f	lineno:21	object:runclient	type:function
+helper	./src/client/full-client.coffee	/helper/;"	f	lineno:23	object:runclient	type:function
+drop	./src/client/full-client.coffee	/drop/;"	f	lineno:27	object:runclient	type:function
+callback	./src/client/full-client.coffee	/callback/;"	f	lineno:31	object:runclient	type:function
+isOver	./src/client/old.coffee	/isOver/;"	f	lineno:2	object:window	type:function
+stopEvent	./src/client/old.coffee	/stopEvent/;"	f	lineno:5	object:window	type:function
+_mouseup	./src/client/old.coffee	/_mouseup/;"	f	lineno:42	object:ddobj	type:function
+binddrag	./src/client/old.coffee	/binddrag/;"	f	lineno:93	object:window	type:function
+event	./src/client/old.coffee	/event/;"	f	lineno:100	object:binddrag	type:function
+start	./src/client/old.coffee	/start/;"	f	lineno:138	object:binddrag	type:function
+stop	./src/client/old.coffee	/stop/;"	f	lineno:140	object:binddrag	type:function
+helper	./src/client/old.coffee	/helper/;"	f	lineno:142	object:binddrag	type:function
+drop	./src/client/old.coffee	/drop/;"	f	lineno:146	object:binddrag	type:function
+isOver	./src/client/zozlib.coffee	/isOver/;"	f	lineno:2	object:window	type:function
+stopEvent	./src/client/zozlib.coffee	/stopEvent/;"	f	lineno:5	object:window	type:function
+constructor	./src/client/zozlib.coffee	/constructor/;"	f	lineno:20	object:DD	type:function
+_mouseup	./src/client/zozlib.coffee	/_mouseup/;"	f	lineno:47	object:DD.constructor	type:function
+log	./src/server/node-server.coffee	/log/;"	f	lineno:25	object:bug	type:function
+log	./src/server/node-server.coffee	/log/;"	f	lineno:29	object:err	type:function
+test	./src/server/node-server.coffee	/test/;"	f	lineno:38	object:err	type:function
+subTemplate	./src/server/node-server.coffee	/subTemplate/;"	f	lineno:53	object:window	type:function
+testTempl	./src/server/node-server.coffee	/testTempl/;"	f	lineno:62	object:window	type:function
+testScriptTempl	./src/server/node-server.coffee	/testScriptTempl/;"	f	lineno:67	object:window	type:function
+zeptoOrjQuery	./src/server/node-server.coffee	/zeptoOrjQuery/;"	f	lineno:72	object:window	type:function
+layoutTest	./src/server/node-server.coffee	/layoutTest/;"	f	lineno:89	object:window	type:function
+layoutSimple	./src/server/node-server.coffee	/layoutSimple/;"	f	lineno:123	object:window	type:function

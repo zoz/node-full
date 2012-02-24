@@ -2,10 +2,11 @@ require 'rake/clean'
 require 'appscript'
 include Appscript
 
-clientFiles = FileList['src/client/*.coffee']
+clientFiles = FileList['src/client/*.coffee', 'test/browser/*.coffee']
 serverFiles = FileList['src/server/*.coffee']
 sharedFiles = FileList['src/shared/*.coffee']
 sassFiles = FileList['src/sass/*.scss']
+stylFiles = FileList['src/styl/*.styl']
 
 generatedFiles = FileList['client/**/*.js', 'server/**/*.js']
 
@@ -27,6 +28,14 @@ directory SERVERDIR
 directory TMPDIR
 directory LOGDIR
 
+stylFiles.each do |srcfile|
+  objfile = File.join(CLIENTDIR, File.basename(srcfile).ext('css'))
+  DEPFILES.push objfile
+  file objfile => [srcfile, CLIENTDIR] do
+    sh "stylus -u nib #{srcfile} -o #{CLIENTDIR}"
+  end
+end
+
 sassFiles.each do |srcfile|
   objfile = File.join(CLIENTDIR, File.basename(srcfile).ext('css'))
   DEPFILES.push objfile
@@ -39,7 +48,7 @@ clientFiles.each do |srcfile|
   objfile = File.join(CLIENTDIR, File.basename(srcfile).ext('js'))
   DEPFILES.push objfile
   file objfile => [srcfile, CLIENTDIR] do
-    sh "coffee -c -b -o #{CLIENTDIR} #{srcfile}" 
+    sh "iced -c --runtime inline -o #{CLIENTDIR} #{srcfile}" 
   end
 end
 
@@ -94,6 +103,7 @@ end
 task :runserver do
   %x[mv tmp/log/server.log tmp/log/server-last.log]
 
+  #cmd = "/usr/local/n/versions/0.6.11/bin/node build/server/node-server.js > tmp/log/server.log 2>&1 &"
   cmd = "node build/server/node-server.js > tmp/log/server.log 2>&1 &"
   %x[#{cmd}]
 
@@ -122,6 +132,16 @@ task :run  => TOUCHFILE do
     Rake::Task['runserver'].invoke
   end
   Rake::Task['browser'].invoke
+end
+
+desc "run mocha tests"
+task :test  => TOUCHFILE do
+  sh "mocha -C"
+end
+
+desc "run mocha tests"
+task :testone  => TOUCHFILE do
+  sh "mocha -C --grep 'zz'"
 end
 
 file TOUCHFILE => DEPFILES do
